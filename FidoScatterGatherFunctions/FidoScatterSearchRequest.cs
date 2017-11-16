@@ -9,6 +9,7 @@ namespace FidoScatterGatherFunctions
     internal class FidoScatterSearchRequest
     {
         public string CorrelationId { get; set; }
+        public string StoreId { get; set; }
         public IEnumerable<DataSource> DataSources { get; set; }
 
         public class DataSource
