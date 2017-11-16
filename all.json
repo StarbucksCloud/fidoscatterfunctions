@@ -1,6 +1,6 @@
 {
 "correlationId": "someGuid",
- "storeId": "1234",
+ "storeId": "11111",
 "dataSources" : [
    {"name": "sales",
        "parameters": [
@@ -10,7 +10,7 @@
                 "value": "5"
             }
         ]
-   }
+   },
    {"name": "inventory",
        "parameters": [
            {
@@ -19,7 +19,7 @@
                "value": "5"
            }
        ]
-   }
+   },
    {"name": "labor",
        "parameters": [
            {
