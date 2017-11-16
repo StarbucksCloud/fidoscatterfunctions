@@ -8,6 +8,9 @@ using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace FidoScatterGatherFunctions
 {
@@ -15,10 +18,12 @@ namespace FidoScatterGatherFunctions
     {
         private static readonly string DataTypeName = "sales";
         [FunctionName("SalesGatherer")]
-        public static void Run([ServiceBusTrigger("fidoscattersearch", "salesGatherSubscription", AccessRights.Listen, Connection = "fidoScatterConnection")]string mySbMsg, TraceWriter log)
+        public static void Run([ServiceBusTrigger("fidoscattersearch", "salesGatherSubscription", AccessRights.Listen, Connection = "fidoScatterConnection")]string mySbMsg, 
+            TraceWriter log)
         {
             var request = JsonConvert.DeserializeObject<FidoScatterSearchRequest>(mySbMsg);
             var myDataSource = request?.DataSources.First(p => DataTypeName.Equals(p.Name));
+            
             if (myDataSource == null)
             {
                 log.Info($"SalesGatherer Skipping {mySbMsg}");
@@ -26,6 +31,9 @@ namespace FidoScatterGatherFunctions
             }
             var data = FetchData(request.StoreId, myDataSource, log);
 
+            WriteToBlob(data, request.CorrelationId);
+            
+   
             log.Info($"C# ServiceBus topic trigger function processed message: {mySbMsg}");
         }
 
@@ -47,6 +55,34 @@ namespace FidoScatterGatherFunctions
 
 
             return items;
+        }
+
+        private static void WriteToBlob<T>(T data, string correlationId) 
+            where T:class
+        {
+            // Retrieve storage account from connection string.
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(System.Environment.GetEnvironmentVariable("SalesDataStorageConnectionAppSetting"));
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("salesdata");
+
+            // Retrieve reference to a blob named "myblob".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(correlationId);
+
+            Stream dataStream = new MemoryStream();
+            using (StreamWriter writer = new StreamWriter(dataStream))
+            using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
+            {
+                JsonSerializer ser = new JsonSerializer();
+                ser.Serialize(jsonWriter, data);
+                jsonWriter.Flush();
+                // Create or overwrite the "myblob" blob with contents from a local file.
+                dataStream.Position = 0;
+                blockBlob.UploadFromStream(dataStream);
+            }
         }
     }
     
