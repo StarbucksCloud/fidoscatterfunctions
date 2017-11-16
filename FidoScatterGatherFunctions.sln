@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FidoScatterGatherFunctions", "FidoScatterGatherFunctions\FidoScatterGatherFunctions.csproj", "{BD5C9C5E-0D3E-4D82-BB96-DBC6FC282613}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD5C9C5E-0D3E-4D82-BB96-DBC6FC282613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD5C9C5E-0D3E-4D82-BB96-DBC6FC282613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD5C9C5E-0D3E-4D82-BB96-DBC6FC282613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD5C9C5E-0D3E-4D82-BB96-DBC6FC282613}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {81FA4C0A-B494-4E64-B686-E3E560E6A3F7}
+	EndGlobalSection
+EndGlobal
