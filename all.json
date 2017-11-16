@@ -1,0 +1,32 @@
+{
+"correlationId": "someGuid",
+"dataSources" : [
+   {"name": "sales",
+       "parameters": [
+            {
+                "key": "quantity",
+                "operator": "equals",
+                "value": "5"
+            }
+        ]
+   }
+   {"name": "inventory",
+       "parameters": [
+           {
+               "key": "quantity",
+               "operator": "equals",
+               "value": "5"
+           }
+       ]
+   }
+   {"name": "labor",
+       "parameters": [
+           {
+               "key": "quantity",
+               "operator": "equals",
+               "value": "5"
+           }
+       ]
+   }
+]
+}
