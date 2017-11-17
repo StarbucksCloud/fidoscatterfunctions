@@ -33,7 +33,6 @@ namespace FidoScatterGatherFunctions
 
             WriteToBlob(data, request.CorrelationId);
             
-   
             log.Info($"C# ServiceBus topic trigger function processed message: {mySbMsg}");
         }
 
@@ -51,8 +50,24 @@ namespace FidoScatterGatherFunctions
                     UriFactory.CreateDocumentCollectionUri(databaseName, collectionName), queryOptions)
                    .Where(s => s.Location == int.Parse(storeId));
 
-            var items = sales.ToList();
+        
+            //foreach (var p in dataSource.Parameters)
+            //{
+            //    var rhs = (typeof(Sale)).GetProperty(p.Key);
+            //    if (rhs == null) continue;
+            //    switch (p.Operator.ToLower())
+            //    {
+            //        case "equals":
+            //            sales.Where(s => p.Value.ToString() == rhs.GetValue(s).ToString());
+            //            break;
+            //        default:
+            //            break;
+                        
+            //    }
 
+            //}
+                 
+            var items = sales.ToList();
 
             return items;
         }
